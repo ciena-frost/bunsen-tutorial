@@ -63,12 +63,6 @@ Now your page should look like following:
 
 Now that we have our application and routes setup we can start digging into creating forms with bunsen.
 
-We are going to need a controller for our signup route so lets create one:
-
-```bash
-ember g controller signup
-```
-
 Lets start by placing the `frost-bunsen-form` component on our sign up page. If you read the documentation for this component you will find that it has a required `bunsenModel` property so lets go ahead and initialize that with a property we will end up adding to our controller.
 
 *app/templates/signup.hbs*
@@ -83,9 +77,15 @@ If you go ahead and try to visit the signup route in your browser you will find 
 
 ![Missing bunsenModel warning](images/missing-model-warning.png)
 
+> NOTE: You may also see an Error in the console which can be disregarded as it has to do with bunsen trying to process a model that isn't currently present.
+
 #### Create Model
 
-This is because `frost-bunsen-form` expects the model property to be either an Ember Object or a plain JavaScript Object and currently it is undefined since we haven't defined it in our controller. Lets go ahead and do that now:
+The above error is because `frost-bunsen-form` expects the model property to be either an Ember Object or a plain JavaScript Object and currently it is undefined since we haven't defined it in our controller. Lets go ahead and create our controller and add this property to it:
+
+```bash
+ember g controller signup
+```
 
 *app/controllers/signup.js*
 
@@ -221,7 +221,7 @@ export default Ember.Controller.extend({
 });
 ```
 
-In the above view JSON the `type` and `version` properties are always present and as of today always contain the values `form` and `1.0`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `rootContainers` informs bunsen which container(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `containers` is an array of named containers where `id` is where the containers unique name is found. Each container must have a `rows` attribute which is an array of rows, with each row being an array of cells. These cells look similar to containers without the `id` attribute and inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
+In the above view JSON the `type` and `version` properties are always present and as of today always contain the values `form` and `1.0`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `rootContainers` informs bunsen which container(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `containers` is an array of named containers where `id` represents the containers unique name. Each container must have a `rows` attribute which is an array of rows, with each row being an array of cells. These cells look similar to containers without the `id` attribute and inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
 
 Now that we have defined a custom view you should see the following in your browser:
 
