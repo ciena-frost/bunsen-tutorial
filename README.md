@@ -154,4 +154,93 @@ Now you should see the following in your browser:
 
 The above screenshot shows how easy it is to get a functioning form but it doesn't look as nice as we'd like. This is where bunsen views come into play.
 
+Lets go ahead and update our signup template to pass a view into the `frost-bunsen-form` component:
+
+*app/templates/signup.hbs*
+
+```handlebars
+{{frost-bunsen-form
+  bunsenModel=bunsenModel
+  bunsenView=bunsenView
+}}
+```
+
+Next we need to define this view in our controller:
+
+*app/controllers/signup.js*
+
+```js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  bunsenModel: {
+    properties: {
+      email: {
+        format: 'email',
+        type: 'string'
+      },
+      name: {
+        properties: {
+          first: {type: 'string'},
+          last: {type: 'string'}
+        },
+        type: 'object'
+      },
+      password: {
+        type: 'string'
+      }
+    },
+    type: 'object'
+  },
+  bunsenView: {
+    containers: [
+      {
+        id: 'main',
+        rows: [
+          [
+            {
+              label: 'First Name',
+              model: 'name.first'
+            }
+          ],
+          [
+            {
+              label: 'Last Name',
+              model: 'name.last'
+            }
+          ],
+          [
+            {
+              model: 'email'
+            }
+          ],
+          [
+            {
+              model: 'password',
+              properties: {
+                type: 'password' // Render input as a password input instead of default text input
+              }
+            }
+          ]
+        ]
+      }
+    ],
+    rootContainers: [
+      {
+        container: 'main',
+        label: 'Main'
+      }
+    ],
+    type: 'form',
+    version: '1.0'
+  }
+});
+```
+
+In the above view JSON the `type` and `version` properties are always present and as of today always contain the values `form` and `1.0`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `rootContainers` informs bunsen which container(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `containers` is an array of named containers where `id` is where the containers unique name is found. Each container must have a `rows` attribute which is an array of rows, with each row being an array of cells. These cells look similar to containers without the `id` attribute and inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
+
+Now that we have defined a custom view you should see the following in your browser:
+
+![Custom view](images/custom-view.png)
+
 *Rest of tutorial coming soon…*
