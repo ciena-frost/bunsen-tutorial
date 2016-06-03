@@ -407,7 +407,7 @@ Now that you know the basics lets create a custom renderer to use a single text 
 ember g component name-renderer
 ```
 
-For our custom renderers template we will simply copy the [template](https://github.com/ciena-frost/ember-frost-bunsen/blob/master/app/templates/components/frost-bunsen-input-text.hbs) for `ember-frost-bunsen`'s builtin text input:
+For our custom renderers template we will simply copy the [template](https://github.com/ciena-frost/ember-frost-bunsen/blob/master/app/templates/components/frost-bunsen-input-text.hbs) for `ember-frost-bunsen`'s builtin text input and replace `transformedValue` with `renderValue`:
 
 *app/templates/components/name-renderer.hbs*
 
@@ -428,7 +428,7 @@ For our custom renderers template we will simply copy the [template](https://git
       onInput=(action "onChange")
       placeholder=cellConfig.placeholder
       type=inputType
-      value=(readonly transformedValue)
+      value=(readonly renderValue)
     }}
   </div>
 </div>
@@ -442,7 +442,7 @@ For our custom renderers template we will simply copy the [template](https://git
 {{/if}}
 ```
 
-Our custom renderer will extend the **AbstractInput** component provided by `ember-frost-bunsen` and override the methods `renderValue` and `parseValue`:
+Our custom renderer will extend the **AbstractInput** component provided by `ember-frost-bunsen` and override the methods `parseValue` as well as provide a computed property `renderValue`:
 
 *app/components/name-renderer.js*
 
