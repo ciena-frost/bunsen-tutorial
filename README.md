@@ -300,8 +300,8 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   bunsenModel: …,
-  bunsenView: …,
   bunsenValue: null,
+  bunsenView: …,
   isFormInvalid: true,
 
   actions: {
@@ -353,8 +353,8 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   bunsenModel: …,
-  bunsenView: …,
   bunsenValue: null,
+  bunsenView: …,
   isFormDisabled: false,
   isFormInvalid: true,
 

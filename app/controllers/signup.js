@@ -22,6 +22,7 @@ export default Ember.Controller.extend({
     required: ['email', 'name', 'password'],
     type: 'object'
   },
+  bunsenValue: null,
   bunsenView: {
     containers: [
       {
@@ -64,7 +65,6 @@ export default Ember.Controller.extend({
     type: 'form',
     version: '1.0'
   },
-  bunsenValue: null,
   isFormDisabled: false,
   isFormInvalid: true,
 
