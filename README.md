@@ -259,7 +259,7 @@ export default Ember.Controller.extend({
 
   actions: {
     formValidation (validation) {
-      this.set('isFormInvalid', validation.errors.length !== 0)
+      this.set('isFormInvalid', validation.errors.length !== 0);
     }
   }
 });
@@ -306,14 +306,14 @@ export default Ember.Controller.extend({
 
   actions: {
     formChange (value) {
-      this.set('formValue', value)
+      this.set('formValue', value);
     },
     formValidation (validation) {
-      this.set('isFormInvalid', validation.errors.length !== 0)
+      this.set('isFormInvalid', validation.errors.length !== 0);
     },
     submitForm () {
-      const value = this.get('formValue')
-      alert(JSON.stringify(value, null, 2))
+      const value = this.get('formValue');
+      alert(JSON.stringify(value, null, 2));
     }
   }
 });
@@ -360,19 +360,19 @@ export default Ember.Controller.extend({
 
   actions: {
     formChange (value) {
-      this.set('formValue', value)
+      this.set('formValue', value);
     },
     formValidation (validation) {
-      this.set('isFormInvalid', validation.errors.length !== 0)
+      this.set('isFormInvalid', validation.errors.length !== 0);
     },
     submitForm () {
-      this.set('formDisabled', true)
+      this.set('formDisabled', true);
 
       Ember.run.later(() => {
-        const value = this.get('formValue')
-        alert(JSON.stringify(value, null, 2))
-        this.set('formDisabled', false)
-      }, 3000)
+        const value = this.get('formValue');
+        alert(JSON.stringify(value, null, 2));
+        this.set('formDisabled', false);
+      }, 3000);
     }
   }
 });

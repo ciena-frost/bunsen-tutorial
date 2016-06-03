@@ -1,0 +1,14 @@
+{{frost-bunsen-form
+  bunsenModel=bunsenModel
+  bunsenView=bunsenView
+  disabled=formDisabled
+  onChange=(action "formChange")
+  onValidation=(action "formValidation")
+}}
+{{frost-button
+  disabled=(or isFormInvalid formDisabled)
+  onClick=(action "submitForm")
+  priority="primary"
+  size="medium"
+  text="Sign Up"
+}}
