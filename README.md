@@ -21,7 +21,7 @@ This tutorial will show you how to get started with `ember-frost-bunsen` by havi
 
 ### Initialize Application
 
-First lets create a new Ember application to get started:
+First let's create a new Ember application to get started:
 
 ```bash
 ember new bunsen-tutorial && cd bunsen-tutorial
@@ -29,7 +29,7 @@ ember new bunsen-tutorial && cd bunsen-tutorial
 
 ### Install `ember-frost-bunsen`
 
-Now that we have an Ember application lets install `ember-frost-bunsen`:
+Now that we have an Ember application let's install `ember-frost-bunsen`:
 
 ```bash
 ember install ember-frost-bunsen
@@ -53,7 +53,7 @@ Now that we have initialized our project we can start by creating a new route fo
 ember g route signup
 ```
 
-Now lets create a template for our index and add a link to the sign up page:
+Now let's create a template for our index and add a link to the sign up page:
 
 ```bash
 ember g template index
@@ -78,7 +78,7 @@ Now your page should look like following:
 
 Now that we have our application and routes setup we can start digging into creating forms with bunsen.
 
-Lets start by placing the `frost-bunsen-form` component on our sign up page. If you read the documentation for this component you will find that it has a required `bunsenModel` property so lets go ahead and initialize that with a property we will end up adding to our controller.
+Let's start by placing the `frost-bunsen-form` component on our sign up page. If you read the documentation for this component you will find that it has a required `bunsenModel` property so let's go ahead and initialize that with a property we will end up adding to our controller.
 
 *app/templates/signup.hbs*
 
@@ -88,7 +88,7 @@ Lets start by placing the `frost-bunsen-form` component on our sign up page. If 
 }}
 ```
 
-If you go ahead and try to visit the signup route in your browser you will find the following warning in your console:
+If you go ahead and try to visit the sign up route in your browser you will find the following warning in your console:
 
 ![Missing bunsenModel warning](images/missing-model-warning.png)
 
@@ -96,7 +96,7 @@ If you go ahead and try to visit the signup route in your browser you will find 
 
 #### Create Model
 
-The above warning is because `frost-bunsen-form` expects the model property to be either an Ember Object or a plain JavaScript Object and currently it is undefined since we haven't defined it in our controller. Lets go ahead and create our controller and add this property to it:
+The above warning is because `frost-bunsen-form` expects the model property to be either an Ember Object or a plain JavaScript Object and currently it is undefined since we haven't defined it in our controller. Let's go ahead and create our controller and add this property to it:
 
 ```bash
 ember g controller signup
@@ -118,7 +118,7 @@ Now if you visit your browser you will see the following:
 
 This error is because the model is expected to be valid JSON Schema. This tutorial is not going to go into what JSON Schema is but [here](http://spacetelescope.github.io/understanding-json-schema/) is a good place to go if you need to learn more about it.
 
-Lets go ahead and update our model to be valid JSON schema for representing our signup form:
+Let's go ahead and update our model to be valid JSON schema for representing our sign up form:
 
 *app/controllers/signup.js*
 
@@ -171,7 +171,7 @@ Now you should see the following in your browser:
 
 The above screenshot shows how easy it is to get a functioning form but it doesn't look as nice as we'd like. This is where bunsen views come into play.
 
-Lets go ahead and update our signup template to pass a view into the `frost-bunsen-form` component:
+Let's go ahead and update our sign up template to pass a view into the `frost-bunsen-form` component:
 
 *app/templates/signup.hbs*
 
@@ -244,7 +244,7 @@ Now that we have defined a custom view you should see the following in your brow
 
 #### Add Submit Button
 
-Now that we have a decent looking form lets add a submit button that is only enabled when the form is valid. In order to achieve this we will leverage the `onValidation` property of the `frost-bunsen-form` component.
+Now that we have a decent looking form let's add a submit button that is only enabled when the form is valid. In order to achieve this we will leverage the `onValidation` property of the `frost-bunsen-form` component.
 
 *app/templates/signup.hbs*
 
@@ -340,7 +340,7 @@ Now you should see the following alert when you fill out the form and press the 
 
 #### Disable Form During Submission
 
-In the event you have the form wired up to a real backend you may want to disable the form while you are waiting for the API request to complete. For this demo lets make the submission wait a few seconds before presenting the alert and during that time disable the entire form in an effort to simulate a slow API request. We will leverage the `disabled` property of the `frost-bunsen-form` component to disable the form. We will also updated the disabled property of our submit button so that it is disabled whenver the form is invalid or the submission is in flight.
+In the event you have the form wired up to a real backend you may want to disable the form while you are waiting for the API request to complete. For this demo let's make the submission wait a few seconds before presenting the alert and during that time disable the entire form in an effort to simulate a slow API request. We will leverage the `disabled` property of the `frost-bunsen-form` component to disable the form. We will also update the disabled property of our submit button so that it is disabled whenever the form is invalid or the submission is in flight.
 
 *app/templates/signup.hbs*
 
@@ -401,7 +401,7 @@ Once you see the alert appear you will notice the form becomes enabled again.
 
 #### Custom Renderer
 
-Now that you know the basics lets create a custom renderer to use a single text input for the users full name.
+Now that you know the basics let's create a custom renderer to use a single text input for the users full name.
 
 ```bash
 ember g component name-renderer
