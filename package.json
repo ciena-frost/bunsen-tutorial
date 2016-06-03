@@ -1,7 +1,7 @@
 {
-  "name": "bunsen-demo",
+  "name": "bunsen-tutorial",
   "version": "0.0.0",
-  "description": "Small description for bunsen-demo goes here",
+  "description": "Small description for bunsen-tutorial goes here",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -12,7 +12,7 @@
     "start": "ember server",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "git@github.com:ciena-frost/bunsen-tutorial.git",
   "engines": {
     "node": ">= 5.0.0"
   },
@@ -38,7 +38,7 @@
     "ember-data": "^2.5.0",
     "ember-export-application-global": "^1.0.5",
     "ember-frost-bunsen": "6.0.3",
-    "ember-frost-core": "0.11.6",
+    "ember-frost-core": "0.11.7",
     "ember-frost-tabs": "2.0.0",
     "ember-load-initializers": "^0.5.1",
     "ember-lodash": "0.0.7",

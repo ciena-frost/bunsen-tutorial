@@ -1,5 +1,7 @@
 # Learn ember-frost-bunsen
 
+[![Travis][ci-img]][ci-url]
+
 ## Table of Contents
 
 * [Getting Started](#getting-started)
@@ -21,7 +23,7 @@ This tutorial will show you how to get started with `ember-frost-bunsen` by havi
 First lets create a new Ember application to get started:
 
 ```bash
-ember new bunsen-demo && cd bunsen-demo
+ember new bunsen-tutorial && cd bunsen-tutorial
 ```
 
 ### Install `ember-frost-bunsen`
@@ -397,3 +399,6 @@ Now when you submit the form you should see the following for a few seconds befo
 Once you see the alert appear you will notice the form becomes enabled again.
 
 *Rest of tutorial coming soon…*
+
+[ci-img]: https://img.shields.io/travis/ciena-frost/bunsen-tutorial.svg "Travis CI Build Status"
+[ci-url]: https://travis-ci.org/ciena-frost/bunsen-tutorial
