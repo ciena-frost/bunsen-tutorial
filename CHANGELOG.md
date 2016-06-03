@@ -1,3 +1,7 @@
+# 0.0.3
+
+* **Fixed** issues in custom renderer documentation.
+
 # 0.0.2
 
 * **Added** example of creating a custom renderer.
