@@ -27,6 +27,8 @@ matrix:
   - env: EMBER_TRY_SCENARIO=ember-canary
 before_install:
 - npm config set spin false
+- npm install -g pr-bumper
+- pr-bumper check
 install:
 - npm install
 - bower install
@@ -36,6 +38,8 @@ before_script:
 - sleep 3 # give xvfb some time to start
 script:
 - ember try:one $EMBER_TRY_SCENARIO --- ember test
+before_deploy:
+- pr-bumper bump
 deploy:
   provider: npm
   email: npm.ciena@gmail.com
