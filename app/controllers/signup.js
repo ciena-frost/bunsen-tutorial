@@ -64,13 +64,13 @@ export default Ember.Controller.extend({
     type: 'form',
     version: '1.0'
   },
-  formValue: null,
+  bunsenValue: null,
   isFormDisabled: false,
   isFormInvalid: true,
 
   actions: {
     formChange (value) {
-      this.set('formValue', value);
+      this.set('bunsenValue', value);
     },
     formValidation (validation) {
       this.set('isFormInvalid', validation.errors.length !== 0);
@@ -79,7 +79,7 @@ export default Ember.Controller.extend({
       this.set('isFormDisabled', true);
 
       Ember.run.later(() => {
-        const value = this.get('formValue');
+        const value = this.get('bunsenValue');
         alert(JSON.stringify(value, null, 2));
         this.set('isFormDisabled', false);
       }, 3000);
