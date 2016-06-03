@@ -122,12 +122,14 @@ export default Ember.Controller.extend({
           first: {type: 'string'},
           last: {type: 'string'}
         },
+        required: ['first', 'last'],
         type: 'object'
       },
       password: {
         type: 'string'
       }
     },
+    required: ['email', 'name', 'password'],
     type: 'object'
   }
 });
@@ -173,25 +175,7 @@ Next we need to define this view in our controller:
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  bunsenModel: {
-    properties: {
-      email: {
-        format: 'email',
-        type: 'string'
-      },
-      name: {
-        properties: {
-          first: {type: 'string'},
-          last: {type: 'string'}
-        },
-        type: 'object'
-      },
-      password: {
-        type: 'string'
-      }
-    },
-    type: 'object'
-  },
+  bunsenModel: …,
   bunsenView: {
     containers: [
       {
@@ -242,5 +226,47 @@ In the above view JSON the `type` and `version` properties are always present an
 Now that we have defined a custom view you should see the following in your browser:
 
 ![Custom view](images/custom-view.png)
+
+#### Creating Submit Button
+
+Now that we have a decent looking form lets create a submit button that is only enabled when the form is valid. In order to achieve this we will leverage the `onValidation` property for the `frost-bunsen-form` component.
+
+*app/templates/signup.hbs*
+
+```handlebars
+{{frost-bunsen-form
+  bunsenModel=bunsenModel
+  bunsenView=bunsenView
+  onValidation=(action "formValidation")
+}}
+{{frost-button
+  disabled=isFormInvalid
+  priority="primary"
+  size="medium"
+  text="Sign Up"
+}}
+```
+
+*app/controllers/signup.js*
+
+```js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  bunsenModel: …,
+  bunsenView: …,
+  isFormInvalid: true,
+
+  actions: {
+    formValidation (validation) {
+      this.set('isFormInvalid', validation.errors.length !== 0)
+    }
+  }
+});
+```
+
+Now you should see the following in your browser:
+
+![Invalid form](images/invalid-form.png)
 
 *Rest of tutorial coming soon…*
