@@ -1,10 +1,22 @@
 # Learn ember-frost-bunsen
 
+## Table of Contents
+
+* [Getting Started](#getting-started)
+  * [Initialize Application](#initialize-application)
+  * [Install ember-frost-bunsen](#install-ember-frost-bunsen)
+  * [Setup Application](#setup-application)
+  * [Create Sign Up Form](create-sign-up-form)
+    * [Create Model](#create-model)
+    * [Create View](#create-view)
+    * [Add Submit Button](#add-submit-button)
+    * [Disable Form During Submission](#disable-form-during-submission)
+
 ## Getting Started
 
 This tutorial will show you how to get started with `ember-frost-bunsen` by having you create a new application with a bunsen form for creating a new user account. You won't actually wire this form up to an API but will learn step-by-step how to go about creating this form in an intuitive process. Ideally after following this tutorial you will have the knowledge necessary to start using `ember-frost-bunsen` within your own application and generate the beautiful forms you desire.
 
-### Initialize application
+### Initialize Application
 
 First lets create a new Ember application to get started:
 
@@ -227,7 +239,7 @@ Now that we have defined a custom view you should see the following in your brow
 
 ![Custom view](images/custom-view.png)
 
-#### Adding a Submit Button
+#### Add Submit Button
 
 Now that we have a decent looking form lets add a submit button that is only enabled when the form is valid. In order to achieve this we will leverage the `onValidation` property of the `frost-bunsen-form` component.
 
