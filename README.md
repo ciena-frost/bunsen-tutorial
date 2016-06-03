@@ -325,7 +325,7 @@ Now you should see the following alert when you fill out the form and press the 
 
 #### Disable During Submission
 
-In the event you have the form wired up to a real backend you may want to disable the form while you are waiting for the API request to complete. For this demo lets make the submission wait a couple seconds before presenting the alert and during that time disable the entire form in an effort to simulate a slow API request.
+In the event you have the form wired up to a real backend you may want to disable the form while you are waiting for the API request to complete. For this demo lets make the submission wait a couple seconds before presenting the alert and during that time disable the entire form in an effort to simulate a slow API request. We will leverage the `disabled` property of the `frost-bunsen-form` component to disable the form.
 
 *app/templates/signup.hbs*
 
@@ -338,7 +338,7 @@ In the event you have the form wired up to a real backend you may want to disabl
   onValidation=(action "formValidation")
 }}
 {{frost-button
-  disabled=isFormInvalid
+  disabled=(or isFormInvalid formDisabled)
   onClick=(action "submitForm")
   priority="primary"
   size="medium"
