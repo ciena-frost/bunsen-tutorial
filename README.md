@@ -273,4 +273,54 @@ Once you fill out the form so that it becomes valid you will notice that the sub
 
 ![Valid form](images/valid-form.png)
 
+Now that we have a submit button that becomes enabled when the form is valid we ideally want it to submit the form value to some backend API. We will go ahead and wire it up in this demo to simply present the form value in an alert. To get the form value we will leverage the `onChange` property of the `frost-bunsen-form`.
+
+*app/templates/signup.hbs*
+
+```handlebars
+{{frost-bunsen-form
+  bunsenModel=bunsenModel
+  bunsenView=bunsenView
+  onChange=(action "formChange")
+  onValidation=(action "formValidation")
+}}
+{{frost-button
+  disabled=isFormInvalid
+  onClick=(action "submitForm")
+  priority="primary"
+  size="medium"
+  text="Sign Up"
+}}
+```
+
+*app/controllers/signup.js*
+
+```js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  bunsenModel: …,
+  bunsenView: …,
+  isFormInvalid: true,
+  formValue: null,
+
+  actions: {
+    formChange (value) {
+      this.set('formValue', value)
+    },
+    formValidation (validation) {
+      this.set('isFormInvalid', validation.errors.length !== 0)
+    },
+    submitForm () {
+      const value = this.get('formValue')
+      alert(JSON.stringify(value, null, 2))
+    }
+  }
+});
+```
+
+Now you should see the following alert when you fill out the form and press the submit button:
+
+![Submit alert](images/submit-alert.png)
+
 *Rest of tutorial coming soon…*
