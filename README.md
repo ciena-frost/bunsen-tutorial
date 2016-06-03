@@ -81,7 +81,7 @@ If you go ahead and try to visit the signup route in your browser you will find 
 
 #### Create Model
 
-The above error is because `frost-bunsen-form` expects the model property to be either an Ember Object or a plain JavaScript Object and currently it is undefined since we haven't defined it in our controller. Lets go ahead and create our controller and add this property to it:
+The above warning is because `frost-bunsen-form` expects the model property to be either an Ember Object or a plain JavaScript Object and currently it is undefined since we haven't defined it in our controller. Lets go ahead and create our controller and add this property to it:
 
 ```bash
 ember g controller signup
@@ -97,7 +97,7 @@ export default Ember.Controller.extend({
 });
 ```
 
-Now if you run this in your browser you will see the following:
+Now if you visit your browser you will see the following:
 
 ![type missing in model](images/type-missing-in-model.png)
 
@@ -227,9 +227,9 @@ Now that we have defined a custom view you should see the following in your brow
 
 ![Custom view](images/custom-view.png)
 
-#### Creating Submit Button
+#### Adding a Submit Button
 
-Now that we have a decent looking form lets create a submit button that is only enabled when the form is valid. In order to achieve this we will leverage the `onValidation` property for the `frost-bunsen-form` component.
+Now that we have a decent looking form lets add a submit button that is only enabled when the form is valid. In order to achieve this we will leverage the `onValidation` property of the `frost-bunsen-form` component.
 
 *app/templates/signup.hbs*
 
@@ -273,7 +273,7 @@ Once you fill out the form so that it becomes valid you will notice that the sub
 
 ![Valid form](images/valid-form.png)
 
-Now that we have a submit button that becomes enabled when the form is valid we ideally want it to submit the form value to some backend API. We will go ahead and wire it up in this demo to simply present the form value in an alert. To get the form value we will leverage the `onChange` property of the `frost-bunsen-form`.
+Now that we have a submit button that becomes enabled when the form is valid we ideally want it to submit the form value to some backend API. We will go ahead and wire it up in this demo to simply present the form value via an alert. To get the form value we will leverage the `onChange` property of the `frost-bunsen-form`.
 
 *app/templates/signup.hbs*
 
@@ -323,9 +323,9 @@ Now you should see the following alert when you fill out the form and press the 
 
 ![Submit alert](images/submit-alert.png)
 
-#### Disable During Submission
+#### Disable Form During Submission
 
-In the event you have the form wired up to a real backend you may want to disable the form while you are waiting for the API request to complete. For this demo lets make the submission wait a couple seconds before presenting the alert and during that time disable the entire form in an effort to simulate a slow API request. We will leverage the `disabled` property of the `frost-bunsen-form` component to disable the form.
+In the event you have the form wired up to a real backend you may want to disable the form while you are waiting for the API request to complete. For this demo lets make the submission wait a few seconds before presenting the alert and during that time disable the entire form in an effort to simulate a slow API request. We will leverage the `disabled` property of the `frost-bunsen-form` component to disable the form. We will also updated the disabled property of our submit button so that it is disabled whenver the form is invalid or the submission is in flight.
 
 *app/templates/signup.hbs*
 
@@ -378,8 +378,10 @@ export default Ember.Controller.extend({
 });
 ```
 
-Now when you submit the form you should see the following for 3 seconds before getting the alert:
+Now when you submit the form you should see the following for a few seconds before the alert appears:
 
 ![Disabled form](images/disabled-form.png)
+
+Once you see the alert appear you will notice the form becomes enabled again.
 
 *Rest of tutorial coming soon…*
