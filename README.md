@@ -301,8 +301,8 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   bunsenModel: …,
   bunsenView: …,
-  isFormInvalid: true,
   formValue: null,
+  isFormInvalid: true,
 
   actions: {
     formChange (value) {
@@ -322,5 +322,64 @@ export default Ember.Controller.extend({
 Now you should see the following alert when you fill out the form and press the submit button:
 
 ![Submit alert](images/submit-alert.png)
+
+#### Disable During Submission
+
+In the event you have the form wired up to a real backend you may want to disable the form while you are waiting for the API request to complete. For this demo lets make the submission wait a couple seconds before presenting the alert and during that time disable the entire form in an effort to simulate a slow API request.
+
+*app/templates/signup.hbs*
+
+```handlebars
+{{frost-bunsen-form
+  bunsenModel=bunsenModel
+  bunsenView=bunsenView
+  disabled=formDisabled
+  onChange=(action "formChange")
+  onValidation=(action "formValidation")
+}}
+{{frost-button
+  disabled=isFormInvalid
+  onClick=(action "submitForm")
+  priority="primary"
+  size="medium"
+  text="Sign Up"
+}}
+```
+
+*app/controllers/signup.js*
+
+```js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  bunsenModel: …,
+  bunsenView: …,
+  formDisabled: false,
+  formValue: null,
+  isFormInvalid: true,
+
+  actions: {
+    formChange (value) {
+      this.set('formValue', value)
+    },
+    formValidation (validation) {
+      this.set('isFormInvalid', validation.errors.length !== 0)
+    },
+    submitForm () {
+      this.set('formDisabled', true)
+
+      Ember.run.later(() => {
+        const value = this.get('formValue')
+        alert(JSON.stringify(value, null, 2))
+        this.set('formDisabled', false)
+      }, 3000)
+    }
+  }
+});
+```
+
+Now when you submit the form you should see the following for 3 seconds before getting the alert:
+
+![Disabled form](images/disabled-form.png)
 
 *Rest of tutorial coming soon…*
