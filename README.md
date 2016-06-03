@@ -269,4 +269,8 @@ Now you should see the following in your browser:
 
 ![Invalid form](images/invalid-form.png)
 
+Once you fill out the form so that it becomes valid you will notice that the submit button becomes enabled:
+
+![Valid form](images/valid-form.png)
+
 *Rest of tutorial coming soon…*
