@@ -30,14 +30,8 @@ export default Ember.Controller.extend({
         rows: [
           [
             {
-              label: 'First Name',
-              model: 'name.first'
-            }
-          ],
-          [
-            {
-              label: 'Last Name',
-              model: 'name.last'
+              model: 'name',
+              renderer: 'name-renderer'
             }
           ],
           [
