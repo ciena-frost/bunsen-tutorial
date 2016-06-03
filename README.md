@@ -13,6 +13,7 @@
     * [Create View](#create-view)
     * [Add Submit Button](#add-submit-button)
     * [Disable Form During Submission](#disable-form-during-submission)
+    * [Custom Renderer](#custom-renderer)
 
 ## Getting Started
 
@@ -397,6 +398,161 @@ Now when you submit the form you should see the following for a few seconds befo
 ![Disabled form](images/disabled-form.png)
 
 Once you see the alert appear you will notice the form becomes enabled again.
+
+#### Custom Renderer
+
+Now that you know the basics lets create a custom renderer to use a single text input for the users full name.
+
+```bash
+ember g component name-renderer
+```
+
+For our custom renderers template we will simply copy the [template](https://github.com/ciena-frost/ember-frost-bunsen/blob/master/app/templates/components/frost-bunsen-input-text.hbs) for `ember-frost-bunsen`'s builtin text input:
+
+*app/templates/components/name-renderer.hbs*
+
+```handlebars
+<div>
+  <div class={{labelWrapperClassName}}>
+    <label class="alias">{{renderLabel}}</label>
+    {{#if required}}
+      <div class='required'>Required</div>
+    {{/if}}
+  </div>
+  <div class={{inputWrapperClassName}}>
+    {{frost-text
+      class=inputClassName
+      disabled=disabled
+      onBlur=(action "onBlur")
+      onFocus=(action "onFocus")
+      onInput=(action "onChange")
+      placeholder=cellConfig.placeholder
+      type=inputType
+      value=(readonly transformedValue)
+    }}
+  </div>
+</div>
+{{#if renderErrorMessage}}
+  <div>
+    <div class={{labelWrapperClassName}}></div>
+    <div class="error">
+      {{renderErrorMessage}}
+    </div>
+  </div>
+{{/if}}
+```
+
+Our custom renderer will extend the **AbstractInput** component provided by `ember-frost-bunsen` and override the methods `renderValue` and `parseValue`:
+
+*app/components/name-renderer.js*
+
+```js
+import Ember from 'ember';
+import {AbstractInput} from 'ember-frost-bunsen';
+
+export default AbstractInput.extend({
+  classNames: ['frost-field'],
+
+  renderValue: Ember.computed('transformedValue', function () {
+    const name = this.get('transformedValue');
+
+    if (!name) {
+      return '';
+    }
+
+    const first = name.first || '';
+    const last = name.last || '';
+    const space = this.get('trailingSpace') || name.last ? ' ' : '';
+
+    return `${first}${space}${last}`;
+  }).readOnly(),
+
+  parseValue (target) {
+    const parts = target.value.split(' ');
+    const trailingSpace = / $/.test(target.value);
+
+    this.set('trailingSpace', trailingSpace);
+
+    return {
+      first: parts[0],
+      last: (parts.length > 1) ? parts.slice(1).join(' ') : undefined
+    };
+  }
+});
+```
+
+In the above code the `renderValue` computed property takes the *first* and *last* name of the name Object and returns a string in the format `<First_Name> <Last_Name>` (ie `John Doe`). The `parseValue` method does the opposite and converts the string back into the Object form.
+
+Now that we have a custom renderer we need to update our view to render the name property with our custom renderer rather than both the first and last name properties individually:
+
+*app/controller/signup.js*
+
+```js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  bunsenModel: …,
+  bunsenValue: null,
+  bunsenView: {
+    containers: [
+      {
+        id: 'main',
+        rows: [
+          [
+            {
+              model: 'name',
+              renderer: 'name-renderer'
+            }
+          ],
+          [
+            {
+              model: 'email'
+            }
+          ],
+          [
+            {
+              model: 'password',
+              properties: {
+                type: 'password' // Render input as a password input instead of default text input
+              }
+            }
+          ]
+        ]
+      }
+    ],
+    rootContainers: [
+      {
+        container: 'main',
+        label: 'Main'
+      }
+    ],
+    type: 'form',
+    version: '1.0'
+  },
+  isFormDisabled: false,
+  isFormInvalid: true,
+
+  actions: {
+    …
+  }
+});
+```
+
+Now in your browser you should see:
+
+![Custom renderer – empty form](images/custom-renderer-empty.png)
+
+Now fill out the form while only providing a first name in the name input and notice the form doesn't allow submission:
+
+![Custom renderer – no last name](images/custom-renderer-no-last-name.png)
+
+Now add the last name and notice the form will now allow submission:
+
+![Custom renderer – filled out](images/custom-renderer-filled-out.png)
+
+When you submit the form you will get the same alert as before with the `first` and `last` name as separate properties of `name`:
+
+![Submit alert](images/submit-alert.png)
 
 *Rest of tutorial coming soon…*
 
