@@ -333,12 +333,12 @@ In the event you have the form wired up to a real backend you may want to disabl
 {{frost-bunsen-form
   bunsenModel=bunsenModel
   bunsenView=bunsenView
-  disabled=formDisabled
+  disabled=isFormDisabled
   onChange=(action "formChange")
   onValidation=(action "formValidation")
 }}
 {{frost-button
-  disabled=(or isFormInvalid formDisabled)
+  disabled=(or isFormDisabled isFormInvalid)
   onClick=(action "submitForm")
   priority="primary"
   size="medium"
@@ -354,8 +354,8 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   bunsenModel: …,
   bunsenView: …,
-  formDisabled: false,
   formValue: null,
+  isFormDisabled: false,
   isFormInvalid: true,
 
   actions: {
@@ -366,12 +366,12 @@ export default Ember.Controller.extend({
       this.set('isFormInvalid', validation.errors.length !== 0);
     },
     submitForm () {
-      this.set('formDisabled', true);
+      this.set('isFormDisabled', true);
 
       Ember.run.later(() => {
         const value = this.get('formValue');
         alert(JSON.stringify(value, null, 2));
-        this.set('formDisabled', false);
+        this.set('isFormDisabled', false);
       }, 3000);
     }
   }

@@ -64,8 +64,8 @@ export default Ember.Controller.extend({
     type: 'form',
     version: '1.0'
   },
-  formDisabled: false,
   formValue: null,
+  isFormDisabled: false,
   isFormInvalid: true,
 
   actions: {
@@ -76,12 +76,12 @@ export default Ember.Controller.extend({
       this.set('isFormInvalid', validation.errors.length !== 0);
     },
     submitForm () {
-      this.set('formDisabled', true);
+      this.set('isFormDisabled', true);
 
       Ember.run.later(() => {
         const value = this.get('formValue');
         alert(JSON.stringify(value, null, 2));
-        this.set('formDisabled', false);
+        this.set('isFormDisabled', false);
       }, 3000);
     }
   }
