@@ -9,7 +9,7 @@ This tutorial will show you how to get started with `ember-frost-bunsen` by havi
 First lets create a new Ember application to get started:
 
 ```bash
-ember new bunsen-demo && bunsen-demo
+ember new bunsen-demo && cd bunsen-demo
 ```
 
 ### Install `ember-frost-bunsen`
