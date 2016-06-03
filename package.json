@@ -1,7 +1,7 @@
 {
-  "name": "bunsen-demo",
+  "name": "bunsen-tutorial",
   "version": "0.0.0",
-  "description": "Small description for bunsen-demo goes here",
+  "description": "Small description for bunsen-tutorial goes here",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -12,7 +12,7 @@
     "start": "ember server",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "git@github.com:ciena-frost/bunsen-tutorial.git",
   "engines": {
     "node": ">= 5.0.0"
   },

@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'bunsen-demo',
+    modulePrefix: 'bunsen-tutorial',
     environment: environment,
     baseURL: '/',
     locationType: 'hash',
