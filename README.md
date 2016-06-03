@@ -401,7 +401,7 @@ Once you see the alert appear you will notice the form becomes enabled again.
 
 #### Custom Renderer
 
-Now that you know the basics let's create a custom renderer to use a single text input for the users full name.
+Now that you know the basics let's create a custom renderer to use a single text input for the user's full name.
 
 ```bash
 ember g component name-renderer
