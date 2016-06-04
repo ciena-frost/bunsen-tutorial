@@ -14,6 +14,7 @@
     * [Add Submit Button](#add-submit-button)
     * [Disable Form During Submission](#disable-form-during-submission)
     * [Custom Renderer](#custom-renderer)
+    * [Custom Validator](#custom-validator)
 
 ## Getting Started
 
@@ -554,7 +555,104 @@ When you submit the form you will get the same alert as before with the `first` 
 
 ![Submit alert](images/submit-alert.png)
 
-*Rest of tutorial coming soon…*
+#### Custom Validator
+
+Now maybe you want to blacklist certain email addresses or even entire domains due to spam. Lets go ahead and create an email blacklist:
+
+*app/fixtures/email-blacklist.js*
+
+```js
+export default [
+  // Blacklist internet trolls
+  'internettroll@example.com',
+
+  // Blacklist certain government organizations (tin-foil hats welcome)
+  'fbi.gov',
+  'cia.gov'
+];
+```
+
+Now that we have a blacklist lets add a custom validator so our form checks emails against this list.
+
+First we will need to pass our custom validator to the `frost-bunsen-form` component:
+
+*app/templates/signup.hbs*
+
+```handlebars
+{{frost-bunsen-form
+  bunsenModel=bunsenModel
+  bunsenView=bunsenView
+  disabled=isFormDisabled
+  onChange=(action "formChange")
+  onValidation=(action "formValidation")
+  validators=bunsenValidators
+}}
+{{frost-button
+  disabled=(or isFormDisabled isFormInvalid)
+  onClick=(action "submitForm")
+  priority="primary"
+  size="medium"
+  text="Sign Up"
+}}
+```
+
+We will also need to add our custom validator to the controller:
+
+*app/controllers/signup.js*
+
+```js
+import Ember from 'ember';
+import emailBlacklist from 'bunsen-tutorial/fixtures/email-blacklist';
+
+function emailValidator (formValue) {
+  const length = emailBlacklist.length;
+  const response = {
+    value: {
+      errors: [],
+      warnings: []
+    }
+  };
+
+  if (!formValue.email) {
+    return Ember.RSVP.resolve(response);
+  }
+
+  for (let i = 0; i < length; i++) {
+    if (formValue.email.indexOf(emailBlacklist[i]) !== -1) {
+      response.value.errors.push({
+        message: 'Email is blacklisted.',
+        path: '#/email'
+      });
+      break;
+    }
+  }
+
+  return Ember.RSVP.resolve(response);
+}
+
+export default Ember.Controller.extend({
+  bunsenModel: …,
+  bunsenValidators: [
+    emailValidator
+  ],
+  bunsenValue: null,
+  bunsenView: …,
+  isFormDisabled: false,
+  isFormInvalid: true,
+
+  actions: {
+    …
+  }
+});
+```
+
+You will notice our custom validator is simply a function that returns a Promise with an Object of a particular format. This Object contains the key `value` which is an Object containing both `errors` and `warnings`. Each error/warning should be an Object with the keys `message` and `path` where message is the `message` to be displayed in the UI and `path` is the JSON Schema path to the invalid property. Since this function returns a Promise you can do things like make an API request to check if a user is already registered with the provided email. Each validator function is given the entire form value as the first argument.
+
+The `validators` property passed into `frost-bunsen-form` is simply an array of validator functions.
+
+With the above you should see:
+
+![Blacklisted email](images/blacklisted-email.png)
 
 [ci-img]: https://img.shields.io/travis/ciena-frost/bunsen-tutorial.svg "Travis CI Build Status"
 [ci-url]: https://travis-ci.org/ciena-frost/bunsen-tutorial

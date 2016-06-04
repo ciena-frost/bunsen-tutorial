@@ -1,4 +1,31 @@
 import Ember from 'ember';
+import emailBlacklist from 'bunsen-tutorial/fixtures/email-blacklist';
+
+function emailValidator (formValue) {
+  const length = emailBlacklist.length;
+  const response = {
+    value: {
+      errors: [],
+      warnings: []
+    }
+  };
+
+  if (!formValue.email) {
+    return Ember.RSVP.resolve(response);
+  }
+
+  for (let i = 0; i < length; i++) {
+    if (formValue.email.indexOf(emailBlacklist[i]) !== -1) {
+      response.value.errors.push({
+        message: 'Email is blacklisted.',
+        path: '#/email'
+      });
+      break;
+    }
+  }
+
+  return Ember.RSVP.resolve(response);
+}
 
 export default Ember.Controller.extend({
   bunsenModel: {
@@ -22,6 +49,9 @@ export default Ember.Controller.extend({
     required: ['email', 'name', 'password'],
     type: 'object'
   },
+  bunsenValidators: [
+    emailValidator
+  ],
   bunsenValue: null,
   bunsenView: {
     containers: [
