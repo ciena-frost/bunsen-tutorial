@@ -1,3 +1,7 @@
+# 0.0.4
+
+* **Added** example of creating a custom validator.
+
 # 0.0.3
 
 * **Fixed** issues in custom renderer documentation.
