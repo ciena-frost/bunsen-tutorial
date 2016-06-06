@@ -88,7 +88,7 @@ Let's start by placing the `frost-bunsen-form` component on our sign up page. If
 }}
 ```
 
-If you go ahead and try to visit the sign up route in your browser you will find the following warning in your console:
+If you go ahead and try to visit the `signup` route in your browser you will find the following warning in your console:
 
 ![Missing bunsenModel warning](images/missing-model-warning.png)
 
