@@ -557,7 +557,7 @@ When you submit the form you will get the same alert as before with the `first` 
 
 #### Custom Validator
 
-Now maybe you want to blacklist certain email addresses or even entire domains due to spam. Lets go ahead and create an email blacklist:
+Now maybe you want to blacklist certain email addresses or even entire domains due to spam. Let's go ahead and create an email blacklist:
 
 *app/fixtures/email-blacklist.js*
 
@@ -572,7 +572,7 @@ export default [
 ];
 ```
 
-Now that we have a blacklist lets add a custom validator so our form checks emails against this list.
+Now that we have a blacklist let's add a custom validator so our form checks emails against this list.
 
 First we will need to pass our custom validator to the `frost-bunsen-form` component:
 
