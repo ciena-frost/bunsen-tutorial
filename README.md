@@ -217,9 +217,7 @@ export default Ember.Controller.extend({
           [
             {
               model: 'password',
-              properties: {
-                type: 'password' // Render input as a password input instead of default text input
-              }
+              renderer: 'password'
             }
           ]
         ]
@@ -408,37 +406,33 @@ Now that you know the basics let's create a custom renderer to use a single text
 ember g component name-renderer
 ```
 
-For our custom renderers template we will simply copy the [template](https://github.com/ciena-frost/ember-frost-bunsen/blob/master/app/templates/components/frost-bunsen-input-text.hbs) for `ember-frost-bunsen`'s builtin text input and replace `transformedValue` with `renderValue`:
+For our custom renderers template we will simply copy the [template](https://github.com/ciena-frost/ember-frost-bunsen/blob/master/addon/templates/components/frost-bunsen-input-text.hbs) for `ember-frost-bunsen`'s builtin text input and replace `transformedValue` with `renderValue`:
 
 *app/templates/components/name-renderer.hbs*
 
 ```handlebars
-<div>
-  <div class={{labelWrapperClassName}}>
-    <label class="alias">{{renderLabel}}</label>
-    {{#if required}}
-      <div class='required'>Required</div>
-    {{/if}}
-  </div>
-  <div class={{inputWrapperClassName}}>
-    {{frost-text
-      class=inputClassName
-      disabled=disabled
-      onBlur=(action "onBlur")
-      onFocus=(action "onFocus")
-      onInput=(action "onChange")
-      placeholder=cellConfig.placeholder
-      type=inputType
-      value=(readonly renderValue)
-    }}
-  </div>
+<label class={{labelWrapperClassName}}>
+  {{renderLabel}}
+  {{#if required}}
+    <div class='required'>Required</div>
+  {{/if}}
+</label>
+<div class={{inputWrapperClassName}}>
+  {{frost-text
+    class=valueClassName
+    disabled=disabled
+    hook=hook
+    onFocusIn=(action "onFocusIn")
+    onFocusOut=(action "onFocusOut")
+    onInput=(action "onChange")
+    placeholder=cellConfig.placeholder
+    type=inputType
+    value=(readonly renderValue)
+  }}
 </div>
 {{#if renderErrorMessage}}
-  <div>
-    <div class={{labelWrapperClassName}}></div>
-    <div class="error">
-      {{renderErrorMessage}}
-    </div>
+  <div class="error">
+    {{renderErrorMessage}}
   </div>
 {{/if}}
 ```
@@ -513,9 +507,7 @@ export default Ember.Controller.extend({
           [
             {
               model: 'password',
-              properties: {
-                type: 'password' // Render input as a password input instead of default text input
-              }
+              renderer: 'password'
             }
           ]
         ]
