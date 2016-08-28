@@ -193,49 +193,39 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   bunsenModel: …,
   bunsenView: {
-    containers: [
-      {
-        id: 'main',
-        rows: [
-          [
+    bunsenView: {
+      cells: [
+        {
+          extends: 'main'
+        }
+      ],
+      cellDefinitions: {
+        main: {
+          children: [
             {
-              label: 'First Name',
-              model: 'name.first'
-            }
-          ],
-          [
-            {
-              label: 'Last Name',
-              model: 'name.last'
-            }
-          ],
-          [
+              model: 'name'
+            },
             {
               model: 'email'
-            }
-          ],
-          [
+            },
             {
               model: 'password',
-              renderer: 'password'
+              renderer: {
+                name: 'password'
+              }
             }
           ]
-        ]
-      }
-    ],
-    rootContainers: [
-      {
-        container: 'main',
-        label: 'Main'
-      }
-    ],
-    type: 'form',
-    version: '1.0'
+        }
+      },
+      type: 'form',
+      version: '2.0'
+    },
   }
 });
 ```
 
-In the above view JSON the `type` and `version` properties are always present and as of today always contain the values `form` and `1.0`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `rootContainers` informs bunsen which container(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `containers` is an array of named containers where `id` represents the containers unique name. Each container must have a `rows` attribute which is an array of rows, with each row being an array of cells. These cells look similar to containers without the `id` attribute and inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
+# HELP IN REVISING THIS PLEASE
+In the above view JSON the `type` and `version` properties are always present. As of today, type always contains the value `form`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `cells` informs bunsen which cellDefinitions(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `cellDefinitions` is an array of named containers where `id` represents the containers unique name. Each container must have a `rows` attribute which is an array of rows, with each row being an array of cells. These cells look similar to containers without the `id` attribute and inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
 
 Now that we have defined a custom view you should see the following in your browser:
 
@@ -489,38 +479,36 @@ export default Ember.Controller.extend({
   bunsenModel: …,
   bunsenValue: null,
   bunsenView: {
-    containers: [
-      {
-        id: 'main',
-        rows: [
-          [
+    bunsenView: {
+      cells: [
+        {
+          extends: 'main'
+        }
+      ],
+      cellDefinitions: {
+        main: {
+          children: [
             {
               model: 'name',
-              renderer: 'name-renderer'
-            }
-          ],
-          [
+              renderer: {
+                name: 'name-renderer'
+              }
+            },
             {
               model: 'email'
-            }
-          ],
-          [
+            },
             {
               model: 'password',
-              renderer: 'password'
+              renderer: {
+                name: 'password'
+              }
             }
           ]
-        ]
-      }
-    ],
-    rootContainers: [
-      {
-        container: 'main',
-        label: 'Main'
-      }
-    ],
-    type: 'form',
-    version: '1.0'
+        }
+      },
+      type: 'form',
+      version: '2.0'
+    },
   },
   isFormDisabled: false,
   isFormInvalid: true,
