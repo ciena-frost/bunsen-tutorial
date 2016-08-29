@@ -193,51 +193,38 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   bunsenModel: …,
   bunsenView: {
-    containers: [
-      {
-        id: 'main',
-        rows: [
-          [
+    bunsenView: {
+      cells: [
+        {
+          extends: 'main'
+        }
+      ],
+      cellDefinitions: {
+        main: {
+          children: [
             {
-              label: 'First Name',
-              model: 'name.first'
-            }
-          ],
-          [
-            {
-              label: 'Last Name',
-              model: 'name.last'
-            }
-          ],
-          [
+              model: 'name'
+            },
             {
               model: 'email'
-            }
-          ],
-          [
+            },
             {
               model: 'password',
-              properties: {
-                type: 'password' // Render input as a password input instead of default text input
+              renderer: {
+                name: 'password'
               }
             }
           ]
-        ]
-      }
-    ],
-    rootContainers: [
-      {
-        container: 'main',
-        label: 'Main'
-      }
-    ],
-    type: 'form',
-    version: '1.0'
+        }
+      },
+      type: 'form',
+      version: '2.0'
+    },
   }
 });
 ```
 
-In the above view JSON the `type` and `version` properties are always present and as of today always contain the values `form` and `1.0`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `rootContainers` informs bunsen which container(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `containers` is an array of named containers where `id` represents the containers unique name. Each container must have a `rows` attribute which is an array of rows, with each row being an array of cells. These cells look similar to containers without the `id` attribute and inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
+In the above JSON view, the `type` and `version` properties are always present. As of today, `type` always contains the value `form`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `cells` informs bunsen which cell(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `cellDefinitions` is a dictionary of named cells where the key is the cell's unique name. Each cell may have a `children` attribute which is an array of cells. These cells inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
 
 Now that we have defined a custom view you should see the following in your browser:
 
@@ -408,37 +395,33 @@ Now that you know the basics let's create a custom renderer to use a single text
 ember g component name-renderer
 ```
 
-For our custom renderers template we will simply copy the [template](https://github.com/ciena-frost/ember-frost-bunsen/blob/master/app/templates/components/frost-bunsen-input-text.hbs) for `ember-frost-bunsen`'s builtin text input and replace `transformedValue` with `renderValue`:
+For our custom renderers template we will simply copy the [template](https://github.com/ciena-frost/ember-frost-bunsen/blob/master/addon/templates/components/frost-bunsen-input-text.hbs) for `ember-frost-bunsen`'s builtin text input and replace `transformedValue` with `renderValue`:
 
 *app/templates/components/name-renderer.hbs*
 
 ```handlebars
-<div>
-  <div class={{labelWrapperClassName}}>
-    <label class="alias">{{renderLabel}}</label>
-    {{#if required}}
-      <div class='required'>Required</div>
-    {{/if}}
-  </div>
-  <div class={{inputWrapperClassName}}>
-    {{frost-text
-      class=inputClassName
-      disabled=disabled
-      onBlur=(action "onBlur")
-      onFocus=(action "onFocus")
-      onInput=(action "onChange")
-      placeholder=cellConfig.placeholder
-      type=inputType
-      value=(readonly renderValue)
-    }}
-  </div>
+<label class={{labelWrapperClassName}}>
+  {{renderLabel}}
+  {{#if required}}
+    <div class='required'>Required</div>
+  {{/if}}
+</label>
+<div class={{inputWrapperClassName}}>
+  {{frost-text
+    class=valueClassName
+    disabled=disabled
+    hook=hook
+    onFocusIn=(action "onFocusIn")
+    onFocusOut=(action "onFocusOut")
+    onInput=(action "onChange")
+    placeholder=cellConfig.placeholder
+    type=inputType
+    value=(readonly renderValue)
+  }}
 </div>
 {{#if renderErrorMessage}}
-  <div>
-    <div class={{labelWrapperClassName}}></div>
-    <div class="error">
-      {{renderErrorMessage}}
-    </div>
+  <div class="error">
+    {{renderErrorMessage}}
   </div>
 {{/if}}
 ```
@@ -495,40 +478,36 @@ export default Ember.Controller.extend({
   bunsenModel: …,
   bunsenValue: null,
   bunsenView: {
-    containers: [
-      {
-        id: 'main',
-        rows: [
-          [
+    bunsenView: {
+      cells: [
+        {
+          extends: 'main'
+        }
+      ],
+      cellDefinitions: {
+        main: {
+          children: [
             {
               model: 'name',
-              renderer: 'name-renderer'
-            }
-          ],
-          [
+              renderer: {
+                name: 'name-renderer'
+              }
+            },
             {
               model: 'email'
-            }
-          ],
-          [
+            },
             {
               model: 'password',
-              properties: {
-                type: 'password' // Render input as a password input instead of default text input
+              renderer: {
+                name: 'password'
               }
             }
           ]
-        ]
-      }
-    ],
-    rootContainers: [
-      {
-        container: 'main',
-        label: 'Main'
-      }
-    ],
-    type: 'form',
-    version: '1.0'
+        }
+      },
+      type: 'form',
+      version: '2.0'
+    },
   },
   isFormDisabled: false,
   isFormInvalid: true,
