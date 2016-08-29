@@ -224,8 +224,7 @@ export default Ember.Controller.extend({
 });
 ```
 
-# HELP IN REVISING THIS PLEASE
-In the above view JSON the `type` and `version` properties are always present. As of today, type always contains the value `form`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `cells` informs bunsen which cellDefinitions(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `cellDefinitions` is an array of named containers where `id` represents the containers unique name. Each container must have a `rows` attribute which is an array of rows, with each row being an array of cells. These cells look similar to containers without the `id` attribute and inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
+In the above JSON view, the `type` and `version` properties are always present. As of today, `type` always contains the value `form`. These properties exist so bunsen can be extended more in the future without breaking views from older versions. `cells` informs bunsen which cell(s) should be rendered on the form; if more than one is present it will render them as tabs with the `label` for each being used as the text on the tab. `cellDefinitions` is a dictionary of named cells where the key is the cell's unique name. Each cell may have a `children` attribute which is an array of cells. These cells inform bunsen what to render from the model. This is achieved via the `model` attribute which uses dot-notation of where the field lives within the model.
 
 Now that we have defined a custom view you should see the following in your browser:
 
