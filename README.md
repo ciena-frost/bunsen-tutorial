@@ -193,34 +193,36 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   bunsenModel: …,
   bunsenView: {
-    bunsenView: {
-      cells: [
-        {
-          extends: 'main'
-        }
-      ],
-      cellDefinitions: {
-        main: {
-          children: [
-            {
-              model: 'name'
-            },
-            {
-              model: 'email'
-            },
-            {
-              model: 'password',
-              renderer: {
-                name: 'password'
-              }
+    cells: [
+      {
+        children: [
+          {
+            extends: 'main'
+          }
+        ]
+      }
+    ],
+    cellDefinitions: {
+      main: {
+        children: [
+          {
+            model: 'name'
+          },
+          {
+            model: 'email'
+          },
+          {
+            model: 'password',
+            renderer: {
+              name: 'password'
             }
-          ]
-        }
-      },
-      type: 'form',
-      version: '2.0'
+          }
+        ]
+      }
     },
-  }
+    type: 'form',
+    version: '2.0'
+  },
 });
 ```
 
@@ -478,36 +480,38 @@ export default Ember.Controller.extend({
   bunsenModel: …,
   bunsenValue: null,
   bunsenView: {
-    bunsenView: {
-      cells: [
-        {
-          extends: 'main'
-        }
-      ],
-      cellDefinitions: {
-        main: {
-          children: [
-            {
-              model: 'name',
-              renderer: {
-                name: 'name-renderer'
-              }
-            },
-            {
-              model: 'email'
-            },
-            {
-              model: 'password',
-              renderer: {
-                name: 'password'
-              }
+    cells: [
+      {
+        children: [
+          {
+            extends: 'main'
+          }
+        ]
+      }
+    ],
+    cellDefinitions: {
+      main: {
+        children: [
+          {
+            model: 'name',
+            renderer: {
+              name: 'name-renderer'
             }
-          ]
-        }
-      },
-      type: 'form',
-      version: '2.0'
+          },
+          {
+            model: 'email'
+          },
+          {
+            model: 'password',
+            renderer: {
+              name: 'password'
+            }
+          }
+        ]
+      }
     },
+    type: 'form',
+    version: '2.0'
   },
   isFormDisabled: false,
   isFormInvalid: true,
